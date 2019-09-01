@@ -1,0 +1,106 @@
+Kubernetes (K8s) - Container Orchestrator Platform
+Properties:
+- Horizantal Scaling
+- Self Healing
+- Load Balancing & Service Discovery
+- Automated Rolls out and Roll Backs
+- Storage Orchestrator
+- Batch Execution
+- Configration Management 
+
+Kuberbetes Architecture
+- Kubernetes Master - API Server; Scheduler;etcd (Key/Value) - Store metadata information about the nodes; Controller.
+- Kuberbetes Nodes(Client) -  Kube-Proxy (Network Proxy Layer); Docker runtime; Kubelet( Demon process intracting with Master); PODS - Every deployment in the kubernetes runs in POD. Every POD has IP Address. In a single POD we can have multiple Docker containers. Nodes can have multiple PODs.
+
+K8s Commands
+git clone https://github.com/amitgoswami1027/K8sSpringBootExample.git
+./mvnw clean install
+//Bring up Spring boot server
+java -jar spring-boot-lazy-init-example-0.0.1-SNAPSHOT.jar
+
+//Uplaod Docker image into the container registery[Create Docker Image and upload in container registery]
+./mvnw com.google.cloud.tools:jib-maven-plugin:build -Dimage=gcr.io/$GOOGLE_CLOUD_PROJECT/spring-boot-example:v1 
+
+gcloud container clusters get-credentials standard-cluster-1 --zone us-central1-a
+
+kubectl get pods
+kubectl get services
+kubectl get deployment
+
+//Check if docker image is working
+docker run -ti --rm -p 8080:8080 gcr.io/$GOOGLE_CLOUD_PROJECT/spring-boot-example:v1
+  
+kubectl run spring-boot-example --image=gcr.io/$GOOGLE_CLOUD_PROJECT/spring-boot-example:v1 --port=8080
+kubectl get deployments
+kubectl get pods
+kubectl get svc -w (Give Updates)
+kubectl get all
+
+//Services- We will create DNS(Create a External IP Address for the spring-boot-example service)
+kubectl expose deployment spring-boot-example --type=LoadBalancer
+
+kubectl scale deployment spring-boot-example --replicas=3
+
+Creating the YML FILE for CI/CD Integration
+In kubernetes everything is called Objects. In kubernetes to connect to deployment, we need to create service.
+GOOGLE_CLOUD_PROJECT = amitgoswamiproject01-250905
+
+Utility to generate YAML File
+gcr.io/amitgoswamiproject01-250905/spring-boot-example:v1
+
+
+
+
+
+
+
+
+
+====================================================================================================
+Google Cloud
+
+Google Cloud Shell
+gcloud projects list
+gcloud projects create amitgoswamiproject01
+
+PRINT & FORMAT
+gcloud projects list --format=json --limit=1
+gcloud projects list --format=flattened --limit=1
+gcloud projects list --format="table[box,title=Projects](name,lifecycleState)"
+
+PROJECTIONS
+gcloud topic projections
+gcloud projects list --format="csv(name,createTime)"
+
+Zones
+gcloud compute zones list
+Set the Zone
+Docker
+https://opensource.com/resources/what-docker
+
+How does Kubernetes schedule Pods onto machines (called Nodes in Kubernetes)?
+Well, Kelsey says it’s a lot like tetris: https://www.youtube.com/watch?v=Po_MEdnUVDE
+
+gcloud config set compute/zone europe-west1-d
+
+Download Go
+wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.6.2.linux-amd64.tar.gz
+echo "export GOPATH=~/go" >> ~/.bashrc
+source ~/.bashrc
+
+Get the Code
+mkdir -p $GOPATH/src/github.com/udacity
+cd $GOPATH/src/github.com/udacity
+git clone https://github.com/udacity/ud615
+
+cd ud615/app
+
+JWT( JSON Web Tokens)
+
+
+
+
+
+
